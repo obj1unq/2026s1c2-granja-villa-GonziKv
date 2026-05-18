@@ -1,6 +1,7 @@
 import wollok.game.*
 import personaje.*
 import cultivos.*
+import direcciones.*
 
 program farmville {
 	//  CONFIG	
@@ -11,8 +12,17 @@ program farmville {
 
 	//  VISUALES
  	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	
+	//CONTROLES
+	keyboard.a().onPressDo({ personaje.mover(izquierda)})
+	keyboard.d().onPressDo({ personaje.mover(derecha)})
+	keyboard.w().onPressDo({ personaje.mover(arriba)})
+	keyboard.s().onPressDo({ personaje.mover(abajo)})
+	keyboard.m().onPressDo({ personaje.sembrarMaiz()})
+	keyboard.t().onPressDo({ personaje.sembrarTrigo()})
+	keyboard.o().onPressDo({ personaje.sembrarTomaco()})
+	keyboard.c().onPressDo({ personaje.cosechar(game.uniqueCollider(personaje))})
+	keyboard.r().onPressDo({ personaje.regar(game.uniqueCollider(personaje))})
  	//  COMIENZA
 	game.start()
 }
