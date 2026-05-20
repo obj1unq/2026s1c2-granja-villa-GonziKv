@@ -7,10 +7,17 @@ class Maiz {
 	method sembrarse(){
 		game.addVisual(self)
 	}
-	method madurar(){
+	method serRegado(){
 		estado = maizAdulto
 	}
-	method cosecharse(){
+	method serCosechada(){
+		game.removeVisual(self)
+	}
+	method estaListoParaCosechar(){
+		return estado == maizAdulto
+	}
+	method precio(){
+		return 150
 	}
 }
 
@@ -21,15 +28,22 @@ class Trigo{
 	method sembrarse(){
 		game.addVisual(self)
 	}
-	method cosecharse(){
+	method serCosechada(){
+		game.removeVisual(self)
 	}
-	method madurar(){
+	method serRegado(){
 		if (etapa == 3){
 			etapa = 0
 		} else {
 			etapa += 1
 		}
 		image = "wheat_" + etapa.toString() +".png"
+	}
+	method estaListoParaCosechar(){
+		return etapa >= 2
+	}
+	method precio(){
+		return (etapa -1) * 100
 	}
 }
 
@@ -40,7 +54,7 @@ class Tomaco{
 		game.addVisual(self)
 	}
 
-	method madurar(){
+	method serRegado(){
 		if (position.y() == game.height()-1){
 			position = game.at(position.x(),0)
 		} else{
@@ -48,7 +62,14 @@ class Tomaco{
 		}
 	}
 
-	method cosecharse(){
+	method serCosechada(){
+		game.removeVisual(self)
+	}
+	method estaListoParaCosechar(){
+		return true
+	}
+	method precio(){
+		return 80
 	}
 }
 
