@@ -18,9 +18,9 @@ program farmville {
 	keyboard.d().onPressDo({ personaje.mover(derecha)})
 	keyboard.w().onPressDo({ personaje.mover(arriba)})
 	keyboard.s().onPressDo({ personaje.mover(abajo)})
-	keyboard.m().onPressDo({ personaje.sembrarMaiz()})
-	keyboard.t().onPressDo({ personaje.sembrarTrigo()})
-	keyboard.o().onPressDo({ personaje.sembrarTomaco()})
+	keyboard.m().onPressDo({ personaje.sembrar(new Maiz(position = personaje.position()))})
+	keyboard.t().onPressDo({ personaje.sembrar(new Trigo(position = personaje.position()))})
+	keyboard.o().onPressDo({ personaje.sembrar(new Tomaco(position = personaje.position()))})
 	keyboard.c().onPressDo({ personaje.cosechar(game.uniqueCollider(personaje))})
 	keyboard.r().onPressDo({ personaje.regar(game.uniqueCollider(personaje))})
  	//  COMIENZA

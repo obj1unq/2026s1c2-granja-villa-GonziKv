@@ -7,22 +7,19 @@ object personaje {
 	method mover(direccion){
 		position = direccion.siguiente(position)
 	}
-	method sembrarMaiz(){
-		const nuevoMaiz = new Maiz(position = self.position())
-		game.addVisual(nuevoMaiz)
-	}
-	method sembrarTrigo(){
-		const nuevoTrigo = new Trigo(position = self.position())
-		game.addVisual(nuevoTrigo)
-	}
-	method sembrarTomaco(){
-		const nuevoTomaco = new Tomaco(position = self.position())
-		game.addVisual(nuevoTomaco)
+	method sembrar(cultivo){
+		self.validarCultivo()
+		cultivo.sembrarse()
 	}
 	method cosechar(cultivo){
 		cultivo.cosecharse()
 	}
 	method regar(cultivo){
-		cultivo.serRegado()
+		cultivo.madurar()
+	}
+	method validarCultivo(){
+		if (!(game.colliders(self).isEmpty())){
+			self.error("No puedo cultivar donde ya esta cultivado")
+		}
 	}
 }
