@@ -9,15 +9,19 @@ class Maiz {
 	}
 	method serRegado(){
 		estado = maizAdulto
+		image = estado.image()
 	}
 	method serCosechada(){
 		game.removeVisual(self)
 	}
 	method estaListoParaCosechar(){
-		return estado == maizAdulto
+		return estado.listoParaCosechar()
 	}
 	method precio(){
 		return 150
+	}
+	method esPlanta(){
+		return true
 	}
 }
 
@@ -45,6 +49,9 @@ class Trigo{
 	method precio(){
 		return (etapa -1) * 100
 	}
+	method esPlanta(){
+		return true
+	}
 }
 
 class Tomaco{
@@ -71,15 +78,26 @@ class Tomaco{
 	method precio(){
 		return 80
 	}
+	method esPlanta(){
+		return true
+	}
 }
 
 object maizBebe{
 	method image(){
 		return "corn_baby.png"
 	}
+
+	method listoParaCosechar(){
+		return false
+	}
 }
 object maizAdulto{
 	method image(){
 		return "corn_adult.png"
+	}
+
+	method listoParaCosechar(){
+		return true
 	}
 }

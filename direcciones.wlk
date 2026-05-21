@@ -1,4 +1,4 @@
-import game.*
+import wollok.game.*
 object tablero {
     
     method validarDentro(position) {
