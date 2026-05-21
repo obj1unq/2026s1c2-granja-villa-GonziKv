@@ -2,6 +2,7 @@ import wollok.game.*
 import direcciones.*
 import cultivos.*
 import aspersores.*
+import mercados.*
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
