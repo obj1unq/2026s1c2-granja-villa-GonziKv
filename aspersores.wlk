@@ -2,6 +2,7 @@ import wollok.game.*
 class Aspersor{
 	var property position
 	var property image = "aspersor.png"
+	//ACCIONES
 	method regar(){
 		self.regarHorizontal()
 		self.regarVertical()
@@ -21,9 +22,13 @@ class Aspersor{
 		game.getObjectsIn(posicion).forEach({objeto => objeto.serRegado()})
 	}
 	method serRegado(){}
+	//CONSULTAS
 	method esPlanta(){
 		return false
 	}
+	method esMercado(){
+        return false
+    }
 }
 
 object aspersorFactory{

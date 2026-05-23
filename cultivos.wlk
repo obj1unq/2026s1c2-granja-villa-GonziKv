@@ -23,6 +23,9 @@ class Maiz {
 	method esPlanta(){
 		return true
 	}
+	method esMercado(){
+        return false
+    }
 }
 
 class Trigo{
@@ -52,6 +55,9 @@ class Trigo{
 	method esPlanta(){
 		return true
 	}
+	method esMercado(){
+        return false
+    }
 }
 
 class Tomaco{
@@ -81,6 +87,9 @@ class Tomaco{
 	method esPlanta(){
 		return true
 	}
+	method esMercado(){
+        return false
+    }
 }
 
 object maizBebe{
