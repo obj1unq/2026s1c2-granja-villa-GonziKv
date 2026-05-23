@@ -18,8 +18,8 @@ object personaje {
 	}
 
 	method cosechar(){
-		const cultivo = game.uniqueCollider(self)
 		self.validarCosecha()
+		const cultivo = game.uniqueCollider(self)
 		if (cultivo.estaListoParaCosechar()){
 			bolsaConCultivo.add(cultivo)
 			cultivo.serCosechada()
