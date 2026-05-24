@@ -3,15 +3,23 @@ import personaje.*
 import cultivos.*
 import direcciones.*
 import aspersores.*
+import mercados.*
 program farmville {
 	//  CONFIG	
 	game.title("La granja")
 	game.height(10)
 	game.width(10)
 	game.ground("ground.png")
+	const mercado1 = mercadoFactory.crearMercado(game.at(9, 9))
+	const mercado2 = mercadoFactory.crearMercado(game.at(0, 0))
+	const mercado3 = mercadoFactory.crearMercado(game.at(9, 0))
 
 	//  VISUALES
+	game.addVisual(mercado1)
+	game.addVisual(mercado2)
+	game.addVisual(mercado3)
  	game.addVisualCharacter(personaje)
+	
  	
 	//CONTROLES
 	/*keyboard.left().onPressDo({ personaje.mover(izquierda)})

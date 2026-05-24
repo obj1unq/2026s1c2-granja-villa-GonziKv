@@ -33,7 +33,12 @@ object personaje {
 
 	
 	method vender(){
-		cantOro += bolsaConCultivo.sum({cultivo => cultivo.precio()})
+		self.validarMercado()
+		game.uniqueCollider(self).vender(bolsaConCultivo)
+	}
+
+	method recibirOro(cantidad){
+		cantOro += cantidad
 		bolsaConCultivo.clear()
 	}
 
