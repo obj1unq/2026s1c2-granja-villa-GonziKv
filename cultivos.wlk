@@ -68,7 +68,7 @@ class Tomaco{
 	}
 	method validarPosicionSiguiente(posicion){
 		if (!(game.getObjectsIn(posicion).isEmpty())){
-			self.error("No puedo moverme a la siguiente celda ya que esta ocupada")
+			self.error("")
 		}
 	}
 
@@ -78,7 +78,7 @@ class Tomaco{
 			self.validarPosicionSiguiente(posicionSiguiente)
 			position = posicionSiguiente
 		} else{
-			const posicionSiguiente =game.at(position.x(), position.y()+1)
+			const posicionSiguiente = game.at(position.x(), position.y()+1)
 			self.validarPosicionSiguiente(posicionSiguiente)
 			position = posicionSiguiente
 		}

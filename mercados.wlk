@@ -11,6 +11,8 @@ class Mercado{
             game.uniqueCollider(self).recibirOro(cantOroAPagar)
             mercado.addAll(plantasAVender)
             cantMonedas -= cantOroAPagar
+        } else {
+            game.say(self, "No puedo costear esta venta")
         }
     }
 
