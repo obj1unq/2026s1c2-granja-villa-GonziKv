@@ -28,7 +28,7 @@ describe "Sembrar cultivos"{
     }
     test "Sembrar Trigo"{
         const trigoNuevo = new Trigo(position =personaje.position())
-        personaje.sembrar(trigoNuevo) //se crea un nuevo maiz
+        personaje.sembrar(trigoNuevo) //se crea un nuevo trigo
         assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
         assert.equals(0, trigoNuevo.etapa())
     }
