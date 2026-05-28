@@ -66,12 +66,21 @@ class Tomaco{
 	method sembrarse(){
 		game.addVisual(self)
 	}
+	method validarPosicionSiguiente(posicion){
+		if (!(game.getObjectsIn(posicion).isEmpty())){
+			self.error("No puedo moverme a la siguiente celda ya que esta ocupada")
+		}
+	}
 
 	method serRegado(){
 		if (position.y() == game.height()-1){
-			position = game.at(position.x(),0)
+			const posicionSiguiente = game.at(position.x(),0)
+			self.validarPosicionSiguiente(posicionSiguiente)
+			position = posicionSiguiente
 		} else{
-			position = game.at(position.x(), position.y()+1)
+			const posicionSiguiente =game.at(position.x(), position.y()+1)
+			self.validarPosicionSiguiente(posicionSiguiente)
+			position = posicionSiguiente
 		}
 	}
 

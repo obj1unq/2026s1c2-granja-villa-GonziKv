@@ -8,7 +8,7 @@ object personaje {
 	const property image = "fplayer.png"
 	const bolsaConCultivo = []
 	var cantOro = 0
-	/*method mover(direccion){
+	/*method mover(direccion){ //No se si añadir esto o no, pq no lo necesita al tener al ser VisualCharacter
 		position = direccion.siguiente(position)
 	}*/
 	//ACCIONES
