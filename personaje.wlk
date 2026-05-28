@@ -6,7 +6,7 @@ import mercados.*
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
-	const bolsaConCultivo = []
+	const property bolsaConCultivo = [] //es property para test
 	var cantOro = 0
 	method mover(direccion){ //No se si añadir esto o no, pq no lo necesita al tener al ser VisualCharacter
 		position = direccion.siguiente(position)
