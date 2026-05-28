@@ -3,7 +3,7 @@ import wollok.game.*
 class Maiz {
 	var property position
 	var property image = estado.image()
-	var estado = maizBebe
+	var property estado = maizBebe // es property para test.
 	method sembrarse(){
 		game.addVisual(self)
 	}
@@ -31,7 +31,7 @@ class Maiz {
 class Trigo{
 	var property position
 	var property image = "wheat_" + etapa.toString() +".png"
-	var etapa = 0
+	var property etapa = 0 // es property para test.
 	method sembrarse(){
 		game.addVisual(self)
 	}

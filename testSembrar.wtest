@@ -1,0 +1,58 @@
+import wollok.game.*
+import personaje.*
+import cultivos.*
+describe "Sembrar cultivos"{
+    method initalize(){
+        game.clear()
+        game.height(10)
+		game.width(10)
+
+		personaje.position(game.at(5,5))
+    }
+
+    test "Sembrar Maiz"{
+        const maizNuevo = new Maiz(position =personaje.position())
+        personaje.sembrar(maizNuevo) //se crea un nuevo maiz
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()})) //se confirma si es Maiz
+        assert.equals(maizBebe, maizNuevo.estado())
+    }
+
+    test "Intentar Sembrar 2 Maiz"{
+        const maizNuevo = new Maiz(position =personaje.position()) //se crea un nuevo maiz
+        personaje.sembrar(maizNuevo) 
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()})) 
+        //se confirma si existe un cultivo
+        assert.equals(maizBebe, maizNuevo.estado())
+        assert.throwsException({personaje.sembrar(new Maiz(position = personaje.position()))}) 
+        //tira error ya que no se puede cultivar 2 cultivos en una misma parcela
+    }
+    test "Sembrar Trigo"{
+        const trigoNuevo = new Trigo(position =personaje.position())
+        personaje.sembrar(trigoNuevo) //se crea un nuevo maiz
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        assert.equals(0, trigoNuevo.etapa())
+    }
+    test "Intentar Sembrar 2 Trigo"{
+        const trigoNuevo = new Trigo(position =personaje.position()) //se crea un nuevo trigo
+        personaje.sembrar(trigoNuevo) 
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si existe un cultivo
+        assert.equals(0, trigoNuevo.etapa())
+        assert.throwsException({personaje.sembrar(new Trigo(position = personaje.position()))}) 
+        //tira error ya que no se puede cultivar 2 cultivos en una misma parcela
+    }
+    test "SembrarTomaco"{
+        const tomacoNuevo = new Tomaco(position =personaje.position()) //se crea un nuevo tomaco
+        personaje.sembrar(tomacoNuevo) 
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si existe un cultivo
+    }
+    test "Intentar Sembrar Tomaco"{
+        const tomacoNuevo = new Tomaco(position =personaje.position()) //se crea un nuevo tomaco
+        personaje.sembrar(tomacoNuevo) 
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si existe un cultivo
+        assert.throwsException({personaje.sembrar(new Tomaco(position = personaje.position()))}) 
+        //tira error ya que no se puede cultivar 2 cultivos en una misma parcela
+    }
+}

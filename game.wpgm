@@ -22,6 +22,7 @@ program farmville {
 	
  	
 	//CONTROLES
+	//Lo mismo del movimiento del personaje, no se si tendria que ponerlo o no.
 	/*keyboard.left().onPressDo({ personaje.mover(izquierda)})
 	keyboard.right().onPressDo({ personaje.mover(derecha)})
 	keyboard.up().onPressDo({ personaje.mover(arriba)})
