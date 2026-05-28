@@ -1,0 +1,117 @@
+import wollok.game.*
+import personaje.*
+import cultivos.*
+import direcciones.*
+import mercados.*
+describe "Sembrar cultivos"{
+    method initialize(){
+        game.clear()
+        game.height(10)
+		game.width(10)
+
+		personaje.position(game.at(5,5))
+        game.addVisual(personaje)
+    }
+    test "Vender 1 Maiz"{
+        const mercadoTest = new Mercado(position = game.at(5,5))
+        game.addVisual(mercadoTest)
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(10000, mercadoTest.cantMonedas())
+        personaje.mover(arriba)
+        const nuevoMaiz = new Maiz (position = personaje.position())
+        personaje.sembrar(nuevoMaiz)
+        personaje.regar()
+        personaje.cosechar()
+        assert.equals(1, (personaje.bolsaConCultivo()).size())
+        personaje.mover(abajo)
+        assert.equals(mercadoTest.position(), personaje.position())
+        personaje.vender()
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(9850, mercadoTest.cantMonedas())
+        assert.notThat(mercadoTest.stock().isEmpty())
+    }
+    test "Vender 1 trigo en etapa 2"{
+        const mercadoTest = new Mercado(position = personaje.position())
+        game.addVisual(mercadoTest)
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(10000, mercadoTest.cantMonedas())
+        personaje.mover(arriba)
+        const nuevoTrigo = new Trigo (position = personaje.position())
+        personaje.sembrar(nuevoTrigo)
+        personaje.regar()
+        personaje.regar()
+        assert.equals(2, nuevoTrigo.etapa())
+        personaje.cosechar()
+        assert.equals(1, (personaje.bolsaConCultivo()).size())
+        personaje.mover(abajo)
+        assert.equals(mercadoTest.position(), personaje.position())
+        personaje.vender()
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(9900, mercadoTest.cantMonedas())
+        assert.notThat(mercadoTest.stock().isEmpty())
+    }
+    test "Vender 1 trigo en etapa 3"{
+        const mercadoTest = new Mercado(position = personaje.position())
+        game.addVisual(mercadoTest)
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(10000, mercadoTest.cantMonedas())
+        personaje.mover(arriba)
+        const nuevoTrigo = new Trigo (position = personaje.position())
+        personaje.sembrar(nuevoTrigo)
+        personaje.regar()
+        personaje.regar()
+        personaje.regar()
+        assert.equals(3, nuevoTrigo.etapa())
+        personaje.cosechar()
+        assert.equals(1, (personaje.bolsaConCultivo()).size())
+        personaje.mover(abajo)
+        assert.equals(mercadoTest.position(), personaje.position())
+        personaje.vender()
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(9800, mercadoTest.cantMonedas())
+        assert.notThat(mercadoTest.stock().isEmpty())
+    }
+    test "Vender 1 tomaco"{
+        const mercadoTest = new Mercado(position = game.at(5,5))
+        game.addVisual(mercadoTest)
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(10000, mercadoTest.cantMonedas())
+        personaje.mover(arriba)
+        const nuevoTomaco = new Tomaco (position = personaje.position())
+        personaje.sembrar(nuevoTomaco)
+        personaje.cosechar()
+        assert.equals(1, (personaje.bolsaConCultivo()).size())
+        personaje.mover(abajo)
+        assert.equals(mercadoTest.position(), personaje.position())
+        personaje.vender()
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(9920, mercadoTest.cantMonedas())
+        assert.notThat(mercadoTest.stock().isEmpty())
+    }
+    test "Intentar vender pero el mercado no tiene suficientes monedas"{
+        const mercadoTest = new Mercado(position = game.at(5,5))
+        mercadoTest.cantMonedas(0)
+        game.addVisual(mercadoTest)
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        assert.equals(0, mercadoTest.cantMonedas())
+        personaje.mover(arriba)
+        const nuevoTomaco = new Tomaco (position = personaje.position())
+        personaje.sembrar(nuevoTomaco)
+        personaje.cosechar()
+        assert.equals(1, (personaje.bolsaConCultivo()).size())
+        personaje.mover(abajo)
+        assert.equals(mercadoTest.position(), personaje.position())
+        personaje.vender()
+        assert.equals(1, (personaje.bolsaConCultivo()).size()) //mantiene el cultivo
+        assert.equals(0, mercadoTest.cantMonedas())
+        assert.that(mercadoTest.stock().isEmpty())
+    }
+    test "Intentar vender sin mercado"{
+        assert.equals(0, (personaje.bolsaConCultivo()).size())
+        const nuevoTomaco = new Tomaco (position = personaje.position())
+        personaje.sembrar(nuevoTomaco)
+        personaje.cosechar()
+        assert.equals(1, (personaje.bolsaConCultivo()).size())
+        assert.throwsException({personaje.vender()})
+    }
+}

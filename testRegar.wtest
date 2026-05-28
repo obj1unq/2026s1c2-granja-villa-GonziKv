@@ -1,0 +1,92 @@
+import wollok.game.*
+import personaje.*
+import cultivos.*
+import direcciones.*
+describe "Sembrar cultivos"{
+    method initialize(){
+        game.clear()
+        game.height(10)
+		game.width(10)
+
+		personaje.position(game.at(5,5))
+    }
+
+    test "Regar maiz, pasa de bebe a adulta, y si es adulta no pasa nada"{
+        const maizNuevo = new Maiz(position =personaje.position())
+        personaje.sembrar(maizNuevo) //se crea un nuevo maiz
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()})) //se confirma si es Maiz
+        assert.equals(maizBebe, maizNuevo.estado())
+        personaje.regar()
+        assert.equals(maizAdulto, maizNuevo.estado())
+        personaje.regar()
+        assert.equals(maizAdulto, maizNuevo.estado())
+    }
+
+    test "Regar trigo, pasa a traves de las etapas de evolucion"{
+        const trigoNuevo = new Trigo(position =personaje.position())
+        personaje.sembrar(trigoNuevo) //se crea un nuevo trigo
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        assert.equals(0, trigoNuevo.etapa())
+        personaje.regar()
+        assert.equals(1, trigoNuevo.etapa())
+        personaje.regar()
+        assert.equals(2, trigoNuevo.etapa())
+        personaje.regar()
+        assert.equals(3, trigoNuevo.etapa())
+        personaje.regar()
+        assert.equals(0, trigoNuevo.etapa())
+    }
+
+    test "Regar tomaco, se mueve a la celda de arriba"{
+        const tomacoNuevo = new Tomaco(position =personaje.position()) //se crea un nuevo tomaco
+        personaje.sembrar(tomacoNuevo) 
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si existe un cultivo
+        personaje.regar()
+        assert.notThat((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si ya dejo de existir el tomaco
+        personaje.mover(arriba)
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si el tomaco se movio hacia arriba
+    }
+
+    test "Intentar regar tomaco, no se puede ya que existe un tomaco arriba"{
+        const tomacoBloqueado = new Tomaco(position =personaje.position()) //se crea un nuevo tomaco
+        personaje.sembrar(tomacoBloqueado)
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        personaje.mover(arriba)
+        const tomacoBloqueador = new Tomaco(position =personaje.position())
+        personaje.sembrar(tomacoBloqueador)
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        personaje.mover(abajo)
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si existe un cultivo
+        assert.throwsException({personaje.regar()})
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si no se movio el tomaco
+        personaje.mover(arriba)
+        assert.that((game.getObjectsIn(personaje.position())).any({objeto => objeto.esPlanta()}))
+        //se confirma si tampoco se movio el otro tomaco
+    }
+    // quizas seria mejor un assert.equals que utilice las posiciones en vez de un assert.that??
+    // lo voy a probar en el proximo test
+    test "Intentar regar tomaco, no se puede ya que existe un tomaco arriba V2"{
+        const tomacoBloqueado = new Tomaco(position =personaje.position()) //se crea un nuevo tomaco
+        personaje.sembrar(tomacoBloqueado)
+        assert.equals(tomacoBloqueado.position(), personaje.position())
+        personaje.mover(arriba)
+        const tomacoBloqueador = new Tomaco(position = personaje.position())
+        personaje.sembrar(tomacoBloqueador)
+        assert.equals(tomacoBloqueador.position(), personaje.position())
+        personaje.mover(abajo)
+        assert.equals(tomacoBloqueado.position(), personaje.position())
+        //se confirma si existe un cultivo
+        assert.throwsException({personaje.regar()})
+        assert.equals(tomacoBloqueado.position(), personaje.position())
+        //se confirma si no se movio el tomaco
+        personaje.mover(arriba)
+        assert.equals(tomacoBloqueador.position(), personaje.position())
+        //se confirma si tampoco se movio el otro tomaco
+    }
+    // queda mucho mas legible, pero no se que es lo mas correcto, dejo los 2 de constancia.
+}
