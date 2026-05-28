@@ -3,7 +3,7 @@ import personaje.*
 import cultivos.*
 import direcciones.*
 describe "Sembrar cultivos"{
-    method initalize(){
+    method initialize(){
         game.clear()
         game.height(10)
 		game.width(10)

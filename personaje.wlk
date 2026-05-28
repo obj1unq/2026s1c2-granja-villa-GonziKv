@@ -82,5 +82,8 @@ object personaje {
 			self.error("Esta posicion esta ocupada")
 		}
 	}
+	method esMercado(){
+		return false
+	}
 
 }
